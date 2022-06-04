@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/furquan-lp/fullstack_part3/issues"
   },
-  "homepage": "https://github.com/furquan-lp/fullstack_part3#readme"
+  "homepage": "https://github.com/furquan-lp/fullstack_part3#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
 }
