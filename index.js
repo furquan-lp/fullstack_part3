@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
 let persons = [
   {
     "id": 1,
@@ -23,6 +25,13 @@ let persons = [
     "number": "39-23-6423122"
   }
 ];
+
+const generateId = () => {
+  let currentId = Math.floor(Math.random() * 99);
+  while (persons.find(p => p.id === currentId))
+    currentId = Math.floor(Math.random() * 99);
+  return currentId;
+}
 
 app.get('/info', (request, response) => {
   const info = `Phonebook has info for ${persons.length} people
@@ -49,6 +58,21 @@ app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id);
   persons = persons.filter(p => p.id !== id);
   response.status(204).end();
+});
+
+app.post('/api/persons', (request, response) => {
+  if (!request.body) {
+    return response.status(400).json({
+      error: 'body missing or sent incorrectly'
+    });
+  }
+  const person = {
+    name: request.body.name,
+    number: request.body.number,
+    id: generateId(),
+  };
+  persons = persons.concat(person);
+  response.json(person);
 });
 
 const PORT = 3001;
